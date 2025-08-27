@@ -3,6 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { addIndividuals, addGroups } from "../redux/slice";
 
 function AddUser() {
+    function alertForAdd(){
+        alert("successfull added")
+    }
   const dispatch = useDispatch();
   const storedUser = useSelector((state) => state.users);
 
@@ -37,6 +40,7 @@ function AddUser() {
       <h2 className="text-2xl font-bold mb-4 text-center">Add User</h2>
 
       {/* Radio buttons */}
+      {/* radiobutton  for Individual user */}
       <div className="flex justify-center mb-6 space-x-6">
         <label className="flex items-center space-x-2">
           <input
@@ -47,9 +51,9 @@ function AddUser() {
             onChange={(e) => setUser(e.target.value)}
             className="w-4 h-4 text-blue-600"
           />
-          <span className="text-gray-700">Personal</span>
+          <span className="text-gray-700">Individual</span>
         </label>
-
+{/*radio button  for Groups */}
         <label className="flex items-center space-x-2">
           <input
             type="radio"
@@ -89,6 +93,7 @@ function AddUser() {
           />
           <button
             type="submit"
+            onClick={alertForAdd}
             className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
           >
             Add
@@ -136,6 +141,7 @@ function AddUser() {
           />
           <button
             type="submit"
+            onClick={alertForAdd}
             className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
           >
             Add
