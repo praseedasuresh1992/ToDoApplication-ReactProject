@@ -1,7 +1,8 @@
 import React from 'react'
-import {outlet} from 'react-router-dom'
+import {Outlet} from 'react-router-dom'
 import Header from './Header'
 import Footer from './Footer'
+import Navbar from './Navbar'
 
 
 function Layout() {
@@ -9,7 +10,7 @@ function Layout() {
     <div>
       <Header/>
       <Navbar/>
-      <outlet/>
+     <Outlet/>
       <Footer/>
     </div>
   )
