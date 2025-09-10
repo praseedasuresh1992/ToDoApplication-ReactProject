@@ -12,6 +12,7 @@ function Home() {
   const [password, setPassword] = useState("");
   const [darkMode, setDarkMode] = useState(false); // theme state
 
+  // navigate to the page of adding Individual user
   function newUser() {
     navigate("/addUser");
   }
@@ -40,14 +41,14 @@ function Home() {
 
   return (
     <div className={darkMode ? "dark" : ""}>
-      <div className="flex items-center justify-center h-screen bg-blue-200 text-black dark:bg-gray-900 dark:text-white transition-colors duration-300">
+      <div className="flex flex-col items-center justify-center h-screen bg-blue-200 text-black dark:bg-gray-900 dark:text-white transition-colors duration-300">
         {/* Theme Toggle Button */}
         <div className="absolute top-4 right-4">
           <button
             onClick={() => setDarkMode(!darkMode)}
-            className="px-4 py-2 rounded-lg shadow bg-gray-200 text-black dark:bg-gray-700 dark:text-white hover:scale-105 transition"
+            className="px-4 py-2 rounded-lg shadow bg-gray-200 dark:bg-gray-700 dark:text-white hover:scale-105 transition"
           >
-            {darkMode ? "☀️ Light Mode" : "🌙 Dark Mode"}
+            {darkMode ? "Light Mode ☀️" : "Dark Mode 🌙"}
           </button>
         </div>
 

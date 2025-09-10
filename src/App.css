@@ -1,2 +1,35 @@
 @import 'tailwindcss';
-@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+:root {
+  --bg-color: #f0f0f0;
+  --text-color: #000;
+  --button-bg: #e0e0e0;
+  --button-text: #000;
+}
+
+body.dark {
+  --bg-color: #1a1a1a;
+  --text-color: #fff;
+  --button-bg: #333;
+  --button-text: #fff;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: all 0.3s ease;
+  font-family: Arial, sans-serif;
+}
+
+button {
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  opacity: 0.8;
+}

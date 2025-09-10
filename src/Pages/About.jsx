@@ -59,9 +59,9 @@ function About() {
           <li>
             <strong>Login:</strong> Groups log in using:
             <ul className="list-circle ml-6">
-              <li>Representative's <em>email</em></li>
-              <li>Member's <em>email</em></li>
-              <li>A <em>common group password</em></li>
+              <li>Common group <em>email</em></li>
+              
+              <li>A common group <em>password</em></li>
             </ul>
           </li>
           <li>

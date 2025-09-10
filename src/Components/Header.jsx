@@ -2,7 +2,7 @@ import React from 'react';
 
 function Header() {
   return (
-    <header className=" sticky top-0 z-50 bg-cyan-400 py-4 shadow-md">
+    <header className=" sticky top-0 z-50 bg-cyan-400 py-4 ">
       <div className="max-w-6xl mx-auto flex items-center justify-center space-x-4">
         {/* Logo */}
         <img
