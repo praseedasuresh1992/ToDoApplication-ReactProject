@@ -1,68 +1,69 @@
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { useState, useEffect } from "react";
+import "./App.css";
 
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import './App.css'
-import { useState,useEffect } from 'react'
-import Dashboard from './Pages/IndividualHome'
-import AddUser from './Pages/addUser'
-import Home from './Pages/Home'
-import IndividualHome from './Pages/IndividualHome'
-import GroupHome from './Pages/groupHome'
-import DayPlanner from './Pages/DayPlanner'
-import WeekPlanner from './Pages/WeekPlanner'
-import Layout from './Components/Layout'
+import Layout from "./Components/Layout";
+import Home from "./Pages/Home";
+import AddUser from "./Pages/addUser";
+import IndividualHome from "./Pages/IndividualHome";
+import GroupHome from "./Pages/Groups/groupHome";
+import ManageGroup from "./Pages/Groups/ManageGroup";
+import ManageGroupTask from "./Pages/Groups/ManageGroupTask";
+import TaskList from "./Pages/Groups/TaskList";
+import DayPlanner from "./Pages/DayPlanner";
+import Rating from "./Pages/Rating";
+import About from "./Pages/About";
 
 function App() {
-  const [darkMode,setDarkMode]=useState(false)
+  // ✅ Load theme from localStorage
+  const [darkMode, setDarkMode] = useState(
+    localStorage.getItem("theme") === "dark"
+  );
 
+  // ✅ Apply theme to <html> and persist in localStorage
   useEffect(() => {
     if (darkMode) {
       document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
     } else {
       document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
     }
   }, [darkMode]);
 
-
+  // ✅ Setup router
   const router = createBrowserRouter([
     {
-      path: '/',
+      path: "/",
       element: <Layout />,
       children: [
+        { path: "/", element: <Home /> },
+        { path: "/addUser", element: <AddUser /> },
+        { path: "/dashboardofuser/:name", element: <IndividualHome /> },
         {
-          path: "/",
-          element: <Home />
+          path: "/dashboardofgroup/:groupName",
+          element: <GroupHome />,
+          children: [
+            { path: "manageGroup", element: <ManageGroup /> },
+            { path: "ManageGroupTask", element: <ManageGroupTask /> },
+            { path: "taskList", element: <TaskList /> },
+          ],
         },
-        {
-          path: '/addUser',
-          element: <AddUser />
-        },
-        {
-          path: "/dashboardofuser/:name",
-          element: <IndividualHome />
-        },
-        { path: "/dashboardofgroup/:groupName", element: <GroupHome /> },
-        { path: '/dayPlanner', element: <DayPlanner /> },
-        { path: '/weekPlanner', element: <WeekPlanner /> }
-   ]}
-]  )
+        { path: "/dayPlanner", element: <DayPlanner /> },
+        { path: "/rate", element: <Rating /> },
+        {path:"/about",element:<About/>},
+      ],
+    },
+  ]);
 
-return (
+  return (
+    <div className="min-h-screen bg-white text-black dark:bg-gray-900 dark:text-white transition-colors duration-300">
+     
 
-    <>
-      
-      {/* Dark mode container */}
-
-        <button
-          onClick={() => setDarkMode(!darkMode)}
-          className="px-4 py-2 rounded-lg bg-blue-500 text-white dark:bg-yellow-400 dark:text-black"
-        >
-          {darkMode ? "Switch to Light" : "Switch to Dark"}
-        </button>
-    
-      {/* Router must stay */}
+      {/* Router */}
       <RouterProvider router={router} />
+    </div>
+  );
+}
 
-    </>
-    )
-    }
-export default App
+export default App;

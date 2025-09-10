@@ -3,6 +3,7 @@ import {Outlet} from 'react-router-dom'
 import Header from './Header'
 import Footer from './Footer'
 import Navbar from './Navbar'
+import ThemeToggle from '../Pages/Theme'
 
 
 function Layout() {
@@ -10,6 +11,7 @@ function Layout() {
     <div>
       <Header/>
       <Navbar/>
+      <ThemeToggle/>
      <Outlet/>
       <Footer/>
     </div>

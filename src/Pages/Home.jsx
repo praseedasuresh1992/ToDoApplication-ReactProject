@@ -1,84 +1,97 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import Header from "../Components/Header";
-import Navbar from "../Components/Navbar";
-import Footer from "../Components/Footer";
-
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../redux/slice";
 
 function Home() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const savedData = useSelector((state) => state.users.users);
 
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [darkMode, setDarkMode] = useState(false); // theme state
 
-  
   function newUser() {
     navigate("/addUser");
   }
-  const [email,setEmail]=useState("");
-  const [password,setPassword]=useState("");
-  
 
-const handleLogin=(e)=>{
-  e.preventDefault();
-   const savedData=JSON.parse(localStorage.getItem("users"))||[]
-console.log("SavedData from localStorage:", savedData);
+  const handleLogin = (e) => {
+    e.preventDefault();
 
-  const foundUser=savedData.find(
-    (u)=>(u.email === email && u.password === password) || 
-    (u.groupEmail === email && u.groupPassword === password))
+    const foundUser = savedData.find(
+      (u) =>
+        (u.email === email && u.password === password) ||
+        (u.groupEmail === email && u.groupPassword === password)
+    );
 
- if (foundUser) {
-    localStorage.setItem("loggedUser", JSON.stringify(foundUser));
+    if (foundUser) {
+      dispatch(login(foundUser));
 
-
-     if (foundUser.email) {
-      // individual user
-      navigate(`dashboardofuser/${foundUser.name}`);
-    } else if (foundUser.groupEmail) {
-      // group user
-      navigate(`dashboardofgroup/${foundUser.groupName}`);
+      if (foundUser.email) {
+        navigate(`dashboardofuser/${foundUser.name}`);
+      } else if (foundUser.groupEmail) {
+        navigate(`dashboardofgroup/${foundUser.groupName}`);
+      }
+    } else {
+      alert("Invalid Email Or Password");
     }
-  } else {
-    alert("Invalid Email Or Password");
-  }
-  
-
-}
+  };
 
   return (
-    <>
-    <div className="flex items-center justify-center h-screen bg-gray-100">
-      <div className="w-full max-w-sm p-6 bg-white rounded-lg shadow-lg">
-        <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
+    <div className={darkMode ? "dark" : ""}>
+      <div className="flex items-center justify-center h-screen bg-blue-200 text-black dark:bg-gray-900 dark:text-white transition-colors duration-300">
+        {/* Theme Toggle Button */}
+        <div className="absolute top-4 right-4">
+          <button
+            onClick={() => setDarkMode(!darkMode)}
+            className="px-4 py-2 rounded-lg shadow bg-gray-200 text-black dark:bg-gray-700 dark:text-white hover:scale-105 transition"
+          >
+            {darkMode ? "☀️ Light Mode" : "🌙 Dark Mode"}
+          </button>
+        </div>
 
-        <input
-          type="email"
-          placeholder="Enter Your Email Id"
-          onChange={(e)=>setEmail(e.target.value)}
-          className="w-full p-2 mb-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        <input
-          type="password"
-          placeholder="Enter Password"
-          onChange={(e)=>setPassword(e.target.value)}
-          className="w-full p-2 mb-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        <input
-          type="button"
-          value="Login"
-          onClick={handleLogin}
-          className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition mb-4 cursor-pointer"
+        {/* Wrapper for Image + Form */}
+        <div className="flex w-3/4 max-w-4xl bg-blue-100 text-black dark:bg-gray-800 dark:text-white rounded-lg shadow-lg overflow-hidden transition-colors duration-300">
+          {/* Left Side Image */}
+          <img
+            src="./HomePageImage.jpg"
+            alt="HomeBanner"
+            className="w-1/2 object-cover"
+          />
 
-        />
-        <input
-          type="button"
-          onClick={newUser}
-          value="New User"
-          className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition cursor-pointer"
-        />
+          {/* Right Side Form */}
+          <div className="w-1/2 flex flex-col justify-center p-6">
+            <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
+
+            <input
+              type="email"
+              placeholder="Enter Your Email Id"
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full p-2 mb-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <input
+              type="password"
+              placeholder="Enter Password"
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full p-2 mb-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <input
+              type="button"
+              value="Login"
+              onClick={handleLogin}
+              className="w-full bg-blue-300 font-bold text-black dark:bg-gray-700 dark:text-white py-2 rounded-lg hover:bg-blue-700 transition mb-4 cursor-pointer"
+            />
+            <input
+              type="button"
+              onClick={newUser}
+              value="New User"
+              className="w-full bg-green-400 text-black py-2 rounded-lg hover:bg-green-700 transition cursor-pointer"
+            />
+          </div>
+        </div>
       </div>
     </div>
-    </>
   );
 }
 
